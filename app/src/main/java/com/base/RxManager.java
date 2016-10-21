@@ -9,7 +9,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
-/**
+/**todo 可以复用
  * 用于管理RxBus的事件和Rxjava相关代码的生命周期处理
  * Created by baixiaokang on 16/4/28.
  */

@@ -32,6 +32,8 @@ public class SpUtil {
         return new Gson().fromJson(prefs.getString("user", ""), _User.class);
     }
 
+    // TODO: 2016/10/21 直接存储user对象 这个很好
+
     public static void setUser(_User user) {
         prefs.edit().putString("user", new Gson().toJson(user)).commit();
     }

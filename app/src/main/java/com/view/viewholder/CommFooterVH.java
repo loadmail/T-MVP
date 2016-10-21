@@ -28,6 +28,8 @@ public class CommFooterVH extends BaseViewHolder<Object> {
     }
 
     @Override
+    // TODO: 2016/10/21 这个方法很优雅 底部文字说明与view的显示
+
     public void onBindViewHolder(View view, Object o) {
         boolean isHasMore = (null == o ? false : true);
         progressbar.setVisibility(isHasMore ? View.VISIBLE : View.GONE);

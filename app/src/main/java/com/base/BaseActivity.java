@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.base.util.LogUtil;
 import com.base.util.SpUtil;
 import com.base.util.TUtil;
 import com.ui.main.R;
@@ -40,7 +39,9 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         mPresenter = TUtil.getT(this, 0);
         mModel = TUtil.getT(this, 1);
         this.initView();
+        // TODO: 2016/10/21 这里调用了start方法
         if (this instanceof BaseView) mPresenter.setVM(this, mModel);
+
     }
 
     @Override

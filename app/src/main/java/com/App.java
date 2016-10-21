@@ -16,7 +16,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         mApp = this;
-        SpUtil.init(this);
+        SpUtil.init(this);  // TODO: 2016/10/21 sp的init
     }
 
     public static Context getAppContext() {

@@ -15,10 +15,10 @@ import android.widget.LinearLayout;
 
 import com.C;
 import com.base.BaseViewHolder;
-import com.base.util.LogUtil;
-import com.data.Repository;
 import com.base.RxManager;
+import com.base.util.LogUtil;
 import com.data.Data;
+import com.data.Repository;
 import com.ui.main.R;
 import com.view.viewholder.CommFooterVH;
 
@@ -32,7 +32,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.functions.Action1;
 
-/**
+/** todo 这个TRecyclerView可以研究一下
+ *
  * @author Administrator
  */
 public class TRecyclerView<T extends Repository> extends LinearLayout {
@@ -48,6 +49,7 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
     private Context context;
     public CoreAdapter mCommAdapter = new CoreAdapter();
     private int begin = 0;
+    // TODO: 2016/10/21 有头 可刷新 空数据
     private boolean isRefreshable = true, isHasHeadView = false, isEmpty = false;
 
     public RxManager mRxManager = new RxManager();
@@ -71,25 +73,32 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
 
     public void init(Context context) {
         this.context = context;
+        // TODO: 2016/10/21 这个布局很有意思  SwipeRefreshLayout嵌套recyclerView 还有一个emptyView 都是覆盖页面
         View layout = LayoutInflater.from(context).inflate(
                 R.layout.layout_list_recyclerview, null);
         layout.setLayoutParams(new LinearLayout.LayoutParams(
                 android.view.ViewGroup.LayoutParams.MATCH_PARENT,
                 android.view.ViewGroup.LayoutParams.MATCH_PARENT));
-        addView(layout);
+        addView(layout);  // TODO: 2016/10/21 覆盖
         ButterKnife.bind(this, layout);
         initView(context);
     }
 
     private void initView(Context context) {
+
+        // TODO: 2016/10/21 swiperefresh setting
         swiperefresh.setColorSchemeResources(android.R.color.holo_blue_bright);
         swiperefresh.setEnabled(isRefreshable);
+        // TODO: 刷新的开始和停止时  swiperefresh.setRefreshing(true);控制的一个动画,具体的数据操作是在fetch()方法中实现的
         swiperefresh.setOnRefreshListener(() -> reFetch());
+
+
         recyclerview.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(context);
         recyclerview.setLayoutManager(mLayoutManager);
         recyclerview.setItemAnimator(new DefaultItemAnimator());
         recyclerview.setAdapter(mCommAdapter);
+        // TODO: 2016/10/21 添加滚动监听
         recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
             protected int lastVisibleItem;
 
@@ -100,7 +109,7 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
                         && newState == RecyclerView.SCROLL_STATE_IDLE
                         && lastVisibleItem + 1 == recyclerview.getAdapter()
                         .getItemCount() && mCommAdapter.isHasMore)
-                    fetch();
+                    fetch();  // TODO: 2016/10/21 刷新数据
             }
 
             @Override
@@ -122,6 +131,8 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
             swiperefresh.setVisibility(View.VISIBLE);
             reFetch();
         }));
+
+
     }
 
     public CoreAdapter getAdapter() {
@@ -145,6 +156,8 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
         } else
             try {
                 Object obj = ((Activity) context).getIntent().getSerializableExtra(C.HEAD_DATA);
+
+                // TODO: 2016/10/21 获取type这个方法不懂 
                 int mHeadViewType = ((BaseViewHolder) (cla.getConstructor(View.class)
                         .newInstance(new LinearLayout(context)))).getType();
                 this.mCommAdapter.setHeadViewType(mHeadViewType, cla, obj);
@@ -176,6 +189,8 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
     }
 
     public TRecyclerView setView(Class<? extends BaseViewHolder<T>> cla) {
+
+// TODO: 2016/10/21 根据泛型,获取实例
         try {
             BaseViewHolder mIVH = ((BaseViewHolder) (cla.getConstructor(View.class)
                     .newInstance(new LinearLayout(context))));
@@ -205,13 +220,13 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
     }
 
     public void reFetch() {
-        this.begin = 0;
+        this.begin = 0;   // TODO: 2016/10/21 对照
         swiperefresh.setRefreshing(true);
         fetch();
     }
 
     public void fetch() {
-        begin++;
+        begin++;   // TODO: 2016/10/21 这个方法牛逼 把刷新和加载更多漂亮的分开了
         if (isEmpty) {
             ll_emptyview.setVisibility(View.GONE);
             swiperefresh.setVisibility(View.VISIBLE);
@@ -227,15 +242,16 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
                             @Override
                             public void call(Data subjects) {
                                 swiperefresh.setRefreshing(false);
-                                List<T> mList = new ArrayList<T>();
+                                List<T> mList = new ArrayList<T>();// TODO: 2016/10/21 这里不太理解,每次取出的是固定条目的数据,什么时候把数据都加上了呢?
                                 for (Object o : subjects.results) {
-                                    T d = (T) model.clone();
+                                    T d = (T) model.clone(); // TODO: 2016/10/21 这句什么意思?
                                     d.data = o;
-                                    mList.add(d);
+                                    mList.add(d);  // TODO: 2016/10/21 list添加数据
                                 }
-                                mCommAdapter.setBeans(mList, begin);
+                                mCommAdapter.setBeans(mList, begin);// TODO: 2016/10/21 这个很好的管理了数据和页数的关系
+
                                 if (begin == 1 && (subjects.results == null || subjects.results.size() == 0))
-                                    setEmpty();
+                                    setEmpty(); // TODO: 2016/10/21 显示 加载完成
                             }
                         }, new Action1<Throwable>() {
                             @Override
@@ -263,6 +279,7 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
         public boolean isHasMore = true;
         public int viewtype, isHasFooter = 1, isHasHader = 0, mHeadViewType;
         public Object mHeadData;
+        // TODO: 2016/10/21 厉害了我的哥 三viewHolder合一
         public Class<? extends BaseViewHolder> mItemViewClass, mHeadViewClass, mFooterViewClass = CommFooterVH.class;
         public int mFooterViewType = CommFooterVH.LAYOUT_TYPE;
 

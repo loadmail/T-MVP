@@ -1,10 +1,6 @@
 package com.ui.user;
 
-import android.content.Intent;
-import android.os.SystemClock;
-
 import com.C;
-import com.base.util.ImageUtil;
 import com.base.util.SpUtil;
 import com.data.entity._User;
 
@@ -27,6 +23,7 @@ public class UserPresenter extends UserContract.Presenter {
     public void upUserInfo(String face) {
         _User user = SpUtil.getUser();
         user.face = face;
+        // TODO: 2016/10/21 res e 使用的是返回的user
         mRxManager.add(mModel.upUser(user).subscribe(
                 res -> {
                     SpUtil.setUser(user);

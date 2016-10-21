@@ -42,7 +42,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginModel> impl
             String pass = tlPass.getEditText().getText().toString();
             String msg = TextUtils.isEmpty(name) ? "用户名不能为空!" : TextUtils.isEmpty(pass) ? "密码不能为空!" : "";
             if (!TextUtils.isEmpty(msg)) showMsg(msg);
-            else if (isLogin) mPresenter.login(name, pass);
+            else if (isLogin) mPresenter.login(name, pass); // TODO: 2016/10/21 这里看着清晰多了,presenter在调用方法
             else mPresenter.sign(name, pass);
         });
         tv_sign.setOnClickListener(v -> swich());

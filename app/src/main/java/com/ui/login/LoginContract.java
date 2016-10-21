@@ -12,6 +12,7 @@ import rx.Observable;
  * Created by baixiaokang on 16/4/29.
  */
 public interface LoginContract {
+    // TODO: 2016/10/21 contract 合同 契约 con全部  tract 大片土地  束
     interface Model extends BaseModel {
         Observable<_User> login(String name, String pass);
         Observable<CreatedResult> sign(String name, String pass);

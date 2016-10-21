@@ -7,6 +7,7 @@ import java.lang.reflect.ParameterizedType;
  */
 public class TUtil {
     public static <T> T getT(Object o, int i) {
+
         try {
             return ((Class<T>) ((ParameterizedType) (o.getClass()
                     .getGenericSuperclass())).getActualTypeArguments()[i])
@@ -21,6 +22,7 @@ public class TUtil {
         return null;
     }
 
+    // TODO: 2016/10/21 通过类名获取类 Class.forName(className);
     public static Class<?> forName(String className) {
         try {
             return Class.forName(className);
@@ -29,4 +31,6 @@ public class TUtil {
         }
         return null;
     }
+
+
 }

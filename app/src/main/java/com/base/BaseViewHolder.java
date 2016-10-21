@@ -18,10 +18,16 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
     }
 
     /**
+     * 调用:
+     *  int mFooterViewType = ((BaseViewHolder) (cla.getConstructor(View.class)
+     .newInstance(new LinearLayout(context)))).getType();
+
+     *
      * ViewHolder的Type，同时也是它的LayoutId
      *
      * @return
      */
+    // TODO: 2016/10/21  方法很奇妙 在子类中有实现,就是所用布局的id
     public abstract int getType();
 
     /**

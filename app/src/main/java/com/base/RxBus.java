@@ -1,13 +1,13 @@
 package com.base;
 
+import android.support.annotation.NonNull;
+
+import com.base.util.LogUtil;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-
-import android.support.annotation.NonNull;
-
-import com.base.util.LogUtil;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -15,7 +15,9 @@ import rx.functions.Action1;
 import rx.subjects.PublishSubject;
 import rx.subjects.Subject;
 
-/**
+/**  todo 和观察者模式一样  绑定和解绑 list  可以复用
+ *
+ *
  * 用RxJava实现的EventBus
  *
  * @author baixiaokang

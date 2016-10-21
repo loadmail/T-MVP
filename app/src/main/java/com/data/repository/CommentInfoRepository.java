@@ -9,7 +9,7 @@ import com.data.entity.CommentInfo;
 
 import rx.Observable;
 
-/**
+/**  todo Repository 知识库, 栈, 栈房
  * Created by baixiaokang on 16/5/4.
  */
 public class CommentInfoRepository extends Repository<CommentInfo> {

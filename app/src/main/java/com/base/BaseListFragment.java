@@ -20,7 +20,7 @@ public class BaseListFragment extends Fragment {
      */
     public static BaseListFragment newInstance(Class<? extends BaseViewHolder> vh,String type) {
         Bundle arguments = new Bundle();
-        arguments.putString(C.VH_CLASS, vh.getCanonicalName());
+        arguments.putString(C.VH_CLASS, vh.getCanonicalName()); //todo 对应getArguments()
         arguments.putString("type",type);
         BaseListFragment fragment = new BaseListFragment();
         fragment.setArguments(arguments);
@@ -31,6 +31,8 @@ public class BaseListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mXRecyclerView = new TRecyclerView(getContext()).setParam("type",getArguments().getString("type"))
                 .setView(TUtil.forName(getArguments().getString(C.VH_CLASS)));
+        // TODO: 2016/10/21  getArguments().getString(C.VH_CLASS)  bundle  fragment.getArguments()
+        // TODO: 2016/10/21 Arguments 参数  Argument 争论
         return mXRecyclerView;
     }
 
