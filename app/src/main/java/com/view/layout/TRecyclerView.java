@@ -236,6 +236,11 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
             return;
         }
         model.param = param;
+        /* todo 用户列表的封装
+        * 分页加载的封装操作：mTRecyclerView.setItemView(ItemView.class);
+        * 不需要在当前页面写网络请求，不需要写下拉刷新和分页加载更多的回调，不需要写任何Adapter，只需要这一句即可。
+        * 因为用泛型在TRecyclerView里面写过抽象层的操作，将监听和数据的获取封装成通用模板，从此可以一劳永逸了。
+        * */
         mRxManager.add(model.getPageAt(begin)
                 .subscribe(
                         new Action1<Data>() {

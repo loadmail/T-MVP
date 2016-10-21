@@ -19,7 +19,7 @@ public class RxManager {
     private Map<String, Observable<?>> mObservables = new HashMap<>();// 管理观察源
     private CompositeSubscription mCompositeSubscription = new CompositeSubscription();// 管理订阅者者
 
-
+    // TODO: 2016/10/21 接收事件 
     public void on(String eventName, Action1<Object> action1) {
         Observable<?> mObservable = mRxBus.register(eventName);
         mObservables.put(eventName, mObservable);
@@ -37,6 +37,7 @@ public class RxManager {
             mRxBus.unregister(entry.getKey(), entry.getValue());// 移除观察
     }
 
+    // TODO: 2016/10/21 发送事件
     public void post(Object tag, Object content) {
         mRxBus.post(tag, content);
     }

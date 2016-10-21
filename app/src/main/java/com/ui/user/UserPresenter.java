@@ -27,6 +27,7 @@ public class UserPresenter extends UserContract.Presenter {
         mRxManager.add(mModel.upUser(user).subscribe(
                 res -> {
                     SpUtil.setUser(user);
+                    // TODO: 2016/10/21 发送事件
                     mRxManager.post(C.EVENT_LOGIN, user);
                     mView.showMsg("更新成功!");
                 },
@@ -35,6 +36,7 @@ public class UserPresenter extends UserContract.Presenter {
 
     @Override
     public void onStart() {
+        // TODO: 2016/10/21 接收事件
         mRxManager.on(C.EVENT_LOGIN, user -> mView.initUser((_User) user));
     }
 }

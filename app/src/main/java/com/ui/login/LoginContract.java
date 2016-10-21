@@ -13,6 +13,10 @@ import rx.Observable;
  */
 public interface LoginContract {
     // TODO: 2016/10/21 contract 合同 契约 con全部  tract 大片土地  束
+
+    // TODO: 2016/10/21 model 只做数据操作
+    // TODO: 2016/10/21  用 Observable<T> 获得被观察者对象,进一步用rxjava的链式调用后面的方法操作
+    //todo 参照 LoginPresenter
     interface Model extends BaseModel {
         Observable<_User> login(String name, String pass);
         Observable<CreatedResult> sign(String name, String pass);

@@ -26,6 +26,7 @@ public class UserModel implements UserContract.Model {
 
     @Override
     public Observable<CreatedResult> upFile(File file) {
+        // TODO: 2016/10/21 Model只关心如何取到Observable
         return Api.getInstance()
                 .service
                 .upFile(file.getName(), RequestBody.create(MediaType.parse("image/*"), file))
